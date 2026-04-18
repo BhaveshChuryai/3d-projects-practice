@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#07000f;color:#f0e8ff;min-height:100vh;padding:0;}
+
+/* ── GLOBAL VARS ── */
+:root{
+  --red:#e8001d;--red2:#ff2d4a;--gold:#ffc200;--gold2:#ffe066;
+  --dark:#07000f;--mid:#12001f;--surface:rgba(255,255,255,0.04);
+  --border:rgba(232,0,29,0.2);--border-g:rgba(255,194,0,0.2);
+  --dim:#9b7fb0;
+}
+
+.wrap{max-width:900px;margin:0 auto;padding:40px 28px 80px;}
+
+/* ── HEADER ── */
+.hdr{text-align:center;padding:48px 0 40px;border-bottom:1px solid var(--border);margin-bottom:48px;position:relative;}
+.hdr-badge{display:inline-block;padding:5px 18px;border:1px solid var(--red);border-radius:20px;font-size:10px;letter-spacing:4px;color:var(--red);margin-bottom:20px;text-transform:uppercase;}
+.hdr h1{font-size:2.8rem;font-weight:800;background:linear-gradient(135deg,#fff 0%,var(--gold2) 45%,var(--red2) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1.1;margin-bottom:12px;}
+.hdr p{color:var(--dim);font-size:1rem;line-height:1.7;max-width:580px;margin:0 auto;}
+.hdr-meta{display:flex;justify-content:center;gap:30px;margin-top:24px;flex-wrap:wrap;}
+.hdr-pill{font-size:11px;letter-spacing:2px;color:var(--gold);border:1px solid var(--border-g);padding:5px 14px;border-radius:4px;background:rgba(255,194,0,0.05);}
+
+/* ── SECTION ── */
+.sec{margin-bottom:48px;}
+.sec-label{font-size:10px;letter-spacing:4px;color:var(--red2);text-transform:uppercase;display:flex;align-items:center;gap:8px;margin-bottom:16px;}
+.sec-label::before{content:'';width:24px;height:1px;background:var(--red2);}
+.sec h2{font-size:1.5rem;font-weight:700;margin-bottom:20px;color:#fff;}
+
+/* ── CARD ── */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:14px;transition:border-color .3s;}
+.card:hover{border-color:rgba(255,194,0,0.3);}
+.card-title{font-size:1rem;font-weight:700;color:var(--gold);margin-bottom:8px;display:flex;align-items:center;gap:8px;}
+.card-icon{font-size:1.1rem;}
+.card-text{color:var(--dim);font-size:.9rem;line-height:1.75;}
+.card-text strong{color:#f0e8ff;}
+
+/* ── PROBLEM / SOLUTION GRID ── */
+.ps-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.ps-item{background:var(--surface);border:1px solid;border-radius:10px;padding:18px;}
+.ps-item.prob{border-color:rgba(232,0,29,0.3);}
+.ps-item.sol{border-color:rgba(255,194,0,0.3);}
+.ps-item h4{font-size:.75rem;letter-spacing:3px;text-transform:uppercase;margin-bottom:10px;}
+.ps-item.prob h4{color:var(--red2);}
+.ps-item.sol h4{color:var(--gold);}
+.ps-item p{font-size:.88rem;color:var(--dim);line-height:1.7;}
+
+/* ── TECH STACK ── */
+.tech-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+.tech-item{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px 18px;}
+.tech-cat{font-size:.65rem;letter-spacing:3px;color:var(--red);text-transform:uppercase;margin-bottom:8px;}
+.tech-tags{display:flex;flex-wrap:wrap;gap:6px;}
+.tag{font-size:.72rem;padding:3px 10px;border-radius:4px;background:rgba(255,194,0,0.07);border:1px solid rgba(255,194,0,0.2);color:var(--gold);}
+
+/* ── SECTIONS BREAKDOWN ── */
+.section-flow{display:flex;flex-direction:column;gap:0;}
+.sf-row{display:grid;grid-template-columns:56px 1fr;gap:20px;padding-bottom:0;}
+.sf-left{display:flex;flex-direction:column;align-items:center;}
+.sf-dot{width:44px;height:44px;border-radius:50%;border:1.5px solid var(--gold);display:flex;align-items:center;justify-content:center;font-size:1.1rem;background:rgba(255,194,0,0.08);flex-shrink:0;}
+.sf-line{width:2px;flex:1;min-height:24px;background:linear-gradient(to bottom,rgba(255,194,0,0.3),transparent);margin-top:6px;}
+.sf-content{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px;margin-bottom:14px;}
+.sf-content h4{font-size:.95rem;font-weight:700;color:#fff;margin-bottom:6px;}
+.sf-content p{font-size:.85rem;color:var(--dim);line-height:1.7;}
+.sf-content .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;}
+.sf-content .tags span{font-size:.65rem;padding:2px 8px;border-radius:3px;background:rgba(232,0,29,0.1);border:1px solid rgba(232,0,29,0.25);color:var(--red2);}
+
+/* ── ANIMATION BREAKDOWN ── */
+.anim-list{display:flex;flex-direction:column;gap:10px;}
+.anim-item{display:flex;gap:14px;align-items:flex-start;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px;}
+.anim-num{font-size:.7rem;letter-spacing:2px;color:var(--gold);font-weight:700;min-width:30px;padding-top:2px;}
+.anim-body h5{font-size:.9rem;font-weight:700;color:#fff;margin-bottom:4px;}
+.anim-body p{font-size:.83rem;color:var(--dim);line-height:1.65;}
+
+/* ── THE PROMPT ── */
+.prompt-box{background:#030008;border:1px solid var(--gold);border-radius:12px;padding:28px;position:relative;overflow:hidden;}
+.prompt-box::before{content:'MASTER PROMPT';position:absolute;top:14px;right:18px;font-size:.6rem;letter-spacing:3px;color:var(--gold);opacity:.5;}
+.prompt-box pre{font-family:'Courier New',monospace;font-size:.82rem;line-height:1.9;color:#d4c8f0;white-space:pre-wrap;word-break:break-word;}
+.prompt-box pre .kw{color:var(--gold2);}
+.prompt-box pre .val{color:var(--red2);}
+.prompt-box pre .cmt{color:rgba(155,127,176,0.7);font-style:italic;}
+
+/* ── RULES ── */
+.rules-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.rule{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px 18px;display:flex;gap:12px;align-items:flex-start;}
+.rule-ico{font-size:1rem;flex-shrink:0;margin-top:2px;}
+.rule-body h5{font-size:.88rem;font-weight:700;color:#fff;margin-bottom:4px;}
+.rule-body p{font-size:.8rem;color:var(--dim);line-height:1.6;}
+
+/* ── SUCCESS METRICS ── */
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+.metric{background:var(--surface);border:1px solid var(--border-g);border-radius:10px;padding:18px 14px;text-align:center;}
+.metric-num{font-size:1.8rem;font-weight:800;background:linear-gradient(135deg,var(--gold),var(--red2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1;}
+.metric-label{font-size:.7rem;letter-spacing:2px;color:var(--dim);margin-top:6px;text-transform:uppercase;}
+
+/* ── DIVIDER ── */
+.div{height:1px;background:linear-gradient(90deg,transparent,var(--red) 30%,var(--gold) 70%,transparent);opacity:.25;margin:48px 0;}
+
+/* ── COPY BUTTON ── */
+.copy-btn{
+  display:block;width:100%;margin-top:16px;
+  font-size:.75rem;letter-spacing:2px;text-transform:uppercase;
+  padding:12px;border-radius:8px;border:1px solid var(--gold);
+  background:rgba(255,194,0,0.08);color:var(--gold);cursor:pointer;
+  transition:all .3s;
+}
+.copy-btn:hover{background:var(--gold);color:#000;}
+
+/* ── RESPONSIVE ── */
+@media(max-width:640px){
+  .ps-grid,.tech-grid,.rules-grid,.metrics{grid-template-columns:1fr;}
+  .hdr h1{font-size:1.8rem;}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HEADER -->
+  <div class="hdr">
+    <div class="hdr-badge">Product Requirements Document</div>
+    <h1>Bhavesh Churyai<br/>3D Portfolio — v3.0</h1>
+    <p>A cinematic, scroll-driven, WebGL portfolio that delivers a "wow" in the first 3 seconds. PeachWeb-level immersion. Single HTML file. Zero dependencies beyond Three.js CDN.</p>
+    <div class="hdr-meta">
+      <span class="hdr-pill">VERSION 3.0</span>
+      <span class="hdr-pill">SINGLE FILE HTML</span>
+      <span class="hdr-pill">THREE.JS + GSAP</span>
+      <span class="hdr-pill">VERCEL READY</span>
+    </div>
+  </div>
+
+  <!-- PROBLEM / SOLUTION -->
+  <div class="sec">
+    <div class="sec-label">01 — THE PROBLEM</div>
+    <h2>What Went Wrong & What We Fix</h2>
+    <div class="ps-grid">
+      <div class="ps-item prob">
+        <h4>❌ Problems (v1 & v2)</h4>
+        <p>Iron Man image jumbled with 3D canvas. Layout breaking on scroll. Too many competing elements. Spider figure looked procedural/ugly. Sections overlapping. Z-index wars. Performance issues from canvas + absolute positioning fighting.</p>
+      </div>
+      <div class="ps-item sol">
+        <h4>✅ v3 Solution</h4>
+        <p><strong>Fullscreen WebGL canvas only</strong> during hero. HTML sections scroll <em>over</em> the 3D world on a dark glass layer. Clean separation of 3D layer vs content layer. One scroll-driven animation timeline. No absolute positioning wars.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="div"></div>
+
+  <!-- ARCHITECTURE DECISION -->
+  <div class="sec">
+    <div class="sec-label">02 — ARCHITECTURE</div>
+    <h2>The Right Way to Build This</h2>
+    <div class="card">
+      <div class="card-title"><span class="card-icon">🏗️</span>Layer Model (inspired by PeachWeb)</div>
+      <div class="card-text">
+        <strong>Layer 1 (fixed, z=0):</strong> Three.js WebGL canvas — fullscreen, fixed position, always behind everything. Contains all 3D: particles, floating geometry, light effects, animated 3D subject.<br/><br/>
+        <strong>Layer 2 (scroll, z=10):</strong> HTML content sections — fully transparent background, scroll normally over the canvas. Each section has a dark glass overlay so text is readable against the 3D background.<br/><br/>
+        <strong>Layer 3 (fixed, z=100):</strong> Nav, cursor, chatbot, music button. Always on top.<br/><br/>
+        <strong>Key insight:</strong> PeachWeb never puts a 3D model inside a div container. The 3D is the page. HTML floats on top.
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><span class="card-icon">📐</span>Scroll Architecture</div>
+      <div class="card-text">
+        Use <strong>window.scrollY</strong> mapped to a 0→1 progress value. Drive ALL animations from this single value — camera position, object rotation, particle density, section reveal opacity. This is exactly how PeachWeb's scroll works. No GSAP ScrollTrigger needed, just <code>requestAnimationFrame</code> + scroll listener.
+      </div>
+    </div>
+  </div>
+
+  <div class="div"></div>
+
+  <!-- TECH STACK -->
+  <div class="sec">
+    <div class="sec-label">03 — TECH STACK</div>
+    <h2>What We Actually Use (Minimal, Correct)</h2>
+    <div class="tech-grid">
+      <div class="tech-item">
+        <div class="tech-cat">3D Engine</div>
+        <div class="tech-tags">
+          <span class="tag">Three.js r128</span>
+          <span class="tag">CDN only</span>
+          <span class="tag">WebGLRenderer</span>
+        </div>
+      </div>
+      <div class="tech-item">
+        <div class="tech-cat">Animation</div>
+        <div class="tech-tags">
+          <span class="tag">CSS keyframes</span>
+          <span class="tag">requestAnimationFrame</span>
+          <span class="tag">scroll progress</span>
+        </div>
+      </div>
+      <div class="tech-item">
+        <div class="tech-cat">UI / Layout</div>
+        <div class="tech-tags">
+          <span class="tag">Vanilla HTML5</span>
+          <span class="tag">CSS Variables</span>
+          <span class="tag">CSS Grid</span>
+        </div>
+      </div>
+      <div class="tech-item">
+        <div class="tech-cat">Typography</div>
+        <div class="tech-tags">
+          <span class="tag">Bebas Neue</span>
+          <span class="tag">Orbitron</span>
+          <span class="tag">Rajdhani</span>
+        </div>
+      </div>
+      <div class="tech-item">
+        <div class="tech-cat">Audio</div>
+        <div class="tech-tags">
+          <span class="tag">Web Audio API</span>
+          <span class="tag">No files needed</span>
+        </div>
+      </div>
+      <div class="tech-item">
+        <div class="tech-cat">Deployment</div>
+        <div class="tech-tags">
+          <span class="tag">Single HTML file</span>
+          <span class="tag">Vercel drag-drop</span>
+          <span class="tag">GitHub Pages</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="div"></div>
+
+  <!-- SECTIONS BREAKDOWN -->
+  <div class="sec">
+    <div class="sec-label">04 — SECTIONS & ANIMATIONS</div>
+    <h2>Every Section, Every Effect</h2>
+    <div class="section-flow">
+
+      <div class="sf-row">
+        <div class="sf-left"><div class="sf-dot">🌌</div><div class="sf-line"></div></div>
+        <div class="sf-content">
+          <h4>HERO — Fullscreen 3D Universe</h4>
+          <p>Camera slowly drifts forward through a particle field. Text fades in with stagger. Mouse parallax tilts the camera. On scroll: camera accelerates forward, hero text fades out, universe "zooms into" the next section. No separate subject model — the universe IS the hero.</p>
+          <div class="tags"><span>particle field</span><span>mouse parallax</span><span>camera drift</span><span>scroll zoom</span><span>text stagger</span></div>
+        </div>
+      </div>
+
+      <div class="sf-row">
+        <div class="sf-left"><div class="sf-dot">👤</div><div class="sf-line"></div></div>
+        <div class="sf-content">
+          <h4>ABOUT — Glassmorphism Cards over 3D</h4>
+          <p>Section slides in over the live canvas. Cards have backdrop-filter blur giving true glass effect against the 3D particles behind. Cards animate in with slide-up + fade. Hover on each card tilts it in 3D (CSS perspective transform only, no Three.js).</p>
+          <div class="tags"><span>glass morphism</span><span>backdrop-filter</span><span>CSS 3D tilt</span><span>scroll reveal</span><span>stagger animation</span></div>
+        </div>
+      </div>
+
+      <div class="sf-row">
+        <div class="sf-left"><div class="sf-dot">⚡</div><div class="sf-line"></div></div>
+        <div class="sf-content">
+          <h4>SKILLS — 3D Orbital System (Three.js canvas)</h4>
+          <p>Dedicated Three.js canvas embedded inside the section (not fullscreen). Skill nodes orbit a central core along 3 rings. Nodes are colored spheres. User can drag to rotate the system. Clicking a node shows skill level popup. Progress bars animate on scroll-into-view.</p>
+          <div class="tags"><span>orbital rings</span><span>drag rotate</span><span>click popup</span><span>scroll-triggered bars</span></div>
+        </div>
+      </div>
+
+      <div class="sf-row">
+        <div class="sf-left"><div class="sf-dot">🚀</div><div class="sf-line"></div></div>
+        <div class="sf-content">
+          <h4>PROJECTS — 3D Card Gallery</h4>
+          <p>Cards float in a staggered grid. Mouse hover gives genuine CSS 3D perspective tilt (rotateX + rotateY based on cursor position within card). Glowing border on hover. Project opens as expanding overlay (no page navigation). No Three.js here — pure CSS 3D transforms keep it fast.</p>
+          <div class="tags"><span>CSS perspective tilt</span><span>expand overlay</span><span>glow border</span><span>stagger entrance</span></div>
+        </div>
+      </div>
+
+      <div class="sf-row">
+        <div class="sf-left"><div class="sf-dot">🔮</div><div class="sf-line"></div></div>
+        <div class="sf-content">
+          <h4>VISION — Cinematic Scroll Storytelling</h4>
+          <p>Each milestone appears on scroll with a typewriter effect. Background particles shift color (red → gold → white) as you scroll through the vision section. Timeline line "draws" itself as you scroll. Inspired by Apple product pages — text reveals, no jarring jumps.</p>
+          <div class="tags"><span>typewriter</span><span>scroll-color-shift</span><span>timeline draw</span><span>apple-style reveal</span></div>
+        </div>
+      </div>
+
+      <div class="sf-row">
+        <div class="sf-left"><div class="sf-dot">✉️</div></div>
+        <div class="sf-content">
+          <h4>CONTACT — Minimal + Bold</h4>
+          <p>Huge typographic headline. Clean link buttons with hover glow. Optional: mailto link opens email client. A subtle radial gradient pulse on the background 3D canvas. No form complexity — just links and email.</p>
+          <div class="tags"><span>big type</span><span>glow buttons</span><span>radial bg pulse</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="div"></div>
+
+  <!-- ANIMATION PRINCIPLES -->
+  <div class="sec">
+    <div class="sec-label">05 — ANIMATION PRINCIPLES</div>
+    <h2>What Makes PeachWeb Feel Different</h2>
+    <div class="anim-list">
+      <div class="anim-item">
+        <div class="anim-num">01</div>
+        <div class="anim-body">
+          <h5>Scroll = Camera Movement, Not Page Jump</h5>
+          <p>Scrolling should feel like flying through a world, not clicking through pages. Map scrollY to camera.position.z so the 3D world responds to every pixel of scroll. The content sections appear to "grow" out of the 3D environment.</p>
+        </div>
+      </div>
+      <div class="anim-item">
+        <div class="anim-num">02</div>
+        <div class="anim-body">
+          <h5>One Animation Loop, Everything Driven From It</h5>
+          <p>Single requestAnimationFrame loop handles: camera, particles, geometry rotation, section reveals, cursor parallax. No multiple setIntervals fighting each other. This is why the previous version was buggy — too many competing animation sources.</p>
+        </div>
+      </div>
+      <div class="anim-item">
+        <div class="anim-num">03</div>
+        <div class="anim-body">
+          <h5>Mouse Parallax = Depth, Not Distraction</h5>
+          <p>Mouse moves camera position by ±2 units smoothly (lerp, not snap). Makes the 3D world feel alive. DON'T rotate Iron Man or subject 90 degrees — subtle 5–10 degree range only. Use easing: camera.position.x += (targetX - camera.position.x) * 0.05</p>
+        </div>
+      </div>
+      <div class="anim-item">
+        <div class="anim-num">04</div>
+        <div class="anim-body">
+          <h5>Entrance Animations: Stagger + Easing</h5>
+          <p>Never animate all elements simultaneously. Stagger by 100–150ms. Use CSS cubic-bezier(0.22, 1, 0.36, 1) — the "overshoot spring" feel. Elements should slide up AND fade in together. First text appears 300ms after load, each next element 150ms later.</p>
+        </div>
+      </div>
+      <div class="anim-item">
+        <div class="anim-num">05</div>
+        <div class="anim-body">
+          <h5>60 FPS is Non-Negotiable</h5>
+          <p>Limit particle count to 1500–2000. Use BufferGeometry (not Geometry). Set renderer.setPixelRatio(Math.min(devicePixelRatio, 2)). Avoid per-frame DOM reads (getBoundingClientRect in rAF loop = janky). Cache element positions on resize only.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="div"></div>
+
+  <!-- SUCCESS METRICS -->
+  <div class="sec">
+    <div class="sec-label">06 — SUCCESS CRITERIA</div>
+    <h2>How We Know It's Done Right</h2>
+    <div class="metrics">
+      <div class="metric"><div class="metric-num">3s</div><div class="metric-label">Wow moment</div></div>
+      <div class="metric"><div class="metric-num">60</div><div class="metric-label">FPS target</div></div>
+      <div class="metric"><div class="metric-num">1</div><div class="metric-label">HTML file</div></div>
+      <div class="metric"><div class="metric-num">0</div><div class="metric-label">Layout bugs</div></div>
+    </div>
+    <div style="margin-top:16px;" class="card">
+      <div class="card-title"><span class="card-icon">✅</span>Definition of Done Checklist</div>
+      <div class="card-text">
+        <strong>✓</strong> Hero loads with cinematic particle universe, camera drifting forward<br/>
+        <strong>✓</strong> Scrolling moves camera through the 3D world (not just scrolling over it)<br/>
+        <strong>✓</strong> Sections appear as glass panels floating over the 3D environment<br/>
+        <strong>✓</strong> 3D skills orbital system is draggable and shows skill info on click<br/>
+        <strong>✓</strong> Project cards have real CSS 3D tilt on hover<br/>
+        <strong>✓</strong> No layout overflow, no z-index conflicts, no jumbled elements<br/>
+        <strong>✓</strong> Works on mobile (3D still present, simplified)<br/>
+        <strong>✓</strong> Custom cursor, music toggle, chatbot, easter egg all working<br/>
+        <strong>✓</strong> Vercel deploy in one drag-and-drop
+      </div>
+    </div>
+  </div>
+
+  <div class="div"></div>
+
+  <!-- WHAT NOT TO DO -->
+  <div class="sec">
+    <div class="sec-label">07 — RULES</div>
+    <h2>Hard Rules to Never Break</h2>
+    <div class="rules-grid">
+      <div class="rule"><div class="rule-ico">🚫</div><div class="rule-body"><h5>No position:absolute on content over canvas</h5><p>Creates z-index wars and layout chaos. Use normal document flow for sections.</p></div></div>
+      <div class="rule"><div class="rule-ico">🚫</div><div class="rule-body"><h5>No multiple canvases fighting</h5><p>One fixed fullscreen canvas for the hero universe. One small canvas for the skills section only.</p></div></div>
+      <div class="rule"><div class="rule-ico">🚫</div><div class="rule-body"><h5>No Iron Man image on canvas</h5><p>PNG images inside Three.js scenes don't work well without loaders. Use CSS for images.</p></div></div>
+      <div class="rule"><div class="rule-ico">🚫</div><div class="rule-body"><h5>No inline styles fighting CSS classes</h5><p>All styles in one &lt;style&gt; block. Never mix inline style="" with class-based styles on same element.</p></div></div>
+      <div class="rule"><div class="rule-ico">✅</div><div class="rule-body"><h5>Sections have dark glass overlay</h5><p>Each section: background: rgba(7,0,15,0.85); backdrop-filter: blur(2px); so 3D shows through but text is readable.</p></div></div>
+      <div class="rule"><div class="rule-ico">✅</div><div class="rule-body"><h5>One source of truth for scroll progress</h5><p>let scrollProgress = window.scrollY / (document.body.scrollHeight - window.innerHeight); Use this everywhere.</p></div></div>
+    </div>
+  </div>
+
+  <div class="div"></div>
+
+  <!-- THE MASTER PROMPT -->
+  <div class="sec">
+    <div class="sec-label">08 — MASTER PROMPT</div>
+    <h2>Copy This Exact Prompt to Build v3</h2>
+    <div class="prompt-box" id="prompt-box">
+<pre>
+<span class="cmt">// ════════════════════════════════════════════════════════
+// BHAVESH CHURYAI — PORTFOLIO v3.0 — MASTER BUILD PROMPT
+// ════════════════════════════════════════════════════════</span>
+
+Build a <span class="val">complete single-file HTML portfolio</span> for Bhavesh Churyai,
+a 19-year-old Indian IT student. Inspired by <span class="val">peachweb.io</span> — 
+fullscreen WebGL 3D world, scroll-driven camera, glass sections.
+
+<span class="kw">═══ ARCHITECTURE (NON-NEGOTIABLE) ═══</span>
+- One fixed fullscreen canvas (z-index:0), Three.js r128 from CDN
+- HTML sections scroll over canvas normally (z-index:2)
+- Each section: background rgba(7,0,15,0.85) + backdrop-filter blur(2px)
+- Nav + cursor + UI controls: fixed, z-index:100
+- NO absolute positioning on content. NO multiple canvases fighting.
+- One requestAnimationFrame loop drives EVERYTHING
+
+<span class="kw">═══ COLOR THEME ═══</span>
+- Background: #07000f (near-black purple-dark)
+- Primary: #e8001d (crimson red)
+- Accent: #ffc200 (gold)  
+- Text: #f0e8ff (soft white)
+- Dim: #9b7fb0 (muted purple)
+- Fonts: Bebas Neue (display), Orbitron (labels), Rajdhani (body)
+
+<span class="kw">═══ THREE.JS HERO SCENE ═══</span>
+- 2000 particles in red/gold/white/blue colors
+- Camera at z=20, drifts forward slowly in animation loop
+- On scroll: camera.position.z decreases with scrollY (zoom forward)
+- Mouse parallax: camera.position.x/y lerp toward mouse position * 0.05
+- Floating geometric wireframes (IcosahedronGeometry, OctahedronGeometry)
+- Grid helper at y=-12 for city floor feel
+- 20-30 procedural building boxes in dark colors
+- Energy rings (TorusGeometry) slowly rotating
+
+<span class="kw">═══ SCROLL ANIMATION SYSTEM ═══</span>
+const scrollProgress = window.scrollY / 
+  (document.body.scrollHeight - window.innerHeight);
+- Map scrollProgress 0→0.15 to hero camera zoom
+- Map scrollProgress 0.15→0.35 to about section reveal
+- Map scrollProgress 0.35→0.55 to skills section reveal  
+- Map scrollProgress 0.55→0.75 to projects section reveal
+- Map scrollProgress 0.75→1.0 to vision + contact reveal
+- IntersectionObserver for section entrance animations
+
+<span class="kw">═══ HERO SECTION ═══</span>
+- Name: BHAVESH / CHURYAI — Bebas Neue, huge, gradient text
+- Eyebrow: "THE IRON ARCHITECT" — Orbitron, red, letter-spaced
+- Role with typing animation cycling 5 roles
+- Two buttons: clip-path polygon shape
+- 4 stats: 8+ Projects, 1.3Y Markets, 2nd Year, ∞ Drive
+- Scroll indicator with animated line
+
+<span class="kw">═══ ABOUT SECTION ═══</span>
+Bhavesh Churyai, 19, India, 2nd year IT student.
+Interning at Bajaj Auto Limited (Electrolyte division).
+Building PCB Analytics Dashboard in Next.js 14 + PostgreSQL.
+Uses daily train commute as learning block.
+1.3 years stock market experience.
+4 glass cards: Mission, Mindset, Stack, Investor.
+Right side: big quote + paragraphs + trait grid.
+
+<span class="kw">═══ SKILLS SECTION ═══</span>
+- Dedicated Three.js canvas (height: 500px, contained, not fullscreen)
+- Central IcosahedronGeometry core, 3 orbital ring paths
+- 12 colored spheres orbiting at different speeds and distances
+- Mouse drag on canvas to rotate the system
+- 8 skill bars below: HTML(90%), JS(78%), React(72%), Java(70%),
+  PostgreSQL(65%), Node(62%), Problem Solving(88%), Learning(95%)
+- Bars animate width on IntersectionObserver trigger
+
+<span class="kw">═══ PROJECTS SECTION ═══</span>
+3 projects in grid:
+1. Haven Real Estate Platform (Featured, full-width)
+   Stack: Next.js 14, React, PostgreSQL, Tailwind, Vercel
+2. PCB Analytics Dashboard (Bajaj Auto internship)
+   Stack: Next.js 14, PostgreSQL, Fuse.js
+3. Performance Garage (3D supercar showcase)
+   Stack: React, Three.js, Vercel
+Each card: CSS 3D tilt on hover (rotateX + rotateY from mouse pos),
+glow border on hover, project tag + title + desc + pills + link.
+
+<span class="kw">═══ VISION SECTION ═══</span>
+Timeline with 4 steps, IntersectionObserver triggers each:
+1. NOW→2025: Master. Ship. Dominate.
+2. 2025→2026: Freelance. Earn. Compound.
+3. 2026→2027: Build AI-Powered Systems.
+4. 2028→: Independence. Product. Legacy.
+Left side: quote block + descriptive text.
+Inspired by: "Every suit Tony built was better than the last."
+
+<span class="kw">═══ CONTACT SECTION ═══</span>
+- Giant "LET'S / TALK." in Bebas Neue, gradient fill
+- 5 buttons: Email, LinkedIn, GitHub, Twitter/X, Download Resume
+- clip-path polygon buttons, hover glow
+
+<span class="kw">═══ EXTRA FEATURES ═══</span>
+- Custom cursor: gold dot + red ring trail (lerp smoothing)
+- Cinematic loader: spider/suit emoji + progress bar + 5 messages
+- Ambient music: Web Audio API drone (6 oscillators, sine+triangle)
+- AI Chatbot: fixed bottom-right, keyword-matched responses about
+  Bhavesh's skills/projects/internship/goals/contact
+- Easter egg: hidden glyph bottom-left, shows secret message on click
+- All scroll reveals: opacity 0→1 + translateY 30px→0, 0.8s ease
+
+<span class="kw">═══ PERFORMANCE RULES ═══</span>
+- renderer.setPixelRatio(Math.min(devicePixelRatio, 2))
+- Use BufferGeometry for particles (never Geometry)
+- No getBoundingClientRect() inside animation loop
+- Mobile: reduce particle count to 800, simplify geometry
+- All CSS transitions use transform + opacity only (GPU-accelerated)
+
+<span class="kw">═══ DO NOT ═══</span>
+- Do NOT use position:absolute for content sections
+- Do NOT put multiple full-screen canvases  
+- Do NOT use Iron Man image inside Three.js (use CSS if needed)
+- Do NOT use GSAP or heavy libraries (pure JS only)
+- Do NOT mix inline styles with class styles on same elements
+- Do NOT use setInterval for animations (only rAF)
+</pre>
+    </div>
+    <button class="copy-btn" onclick="copyPrompt()">📋 COPY MASTER PROMPT TO CLIPBOARD</button>
+  </div>
+
+  <!-- WHAT TO SAY TO CLAUDE -->
+  <div class="sec">
+    <div class="sec-label">09 — NEXT STEP</div>
+    <h2>Exactly What to Say Next</h2>
+    <div class="card">
+      <div class="card-title"><span class="card-icon">💬</span>Paste this message in a new chat with Claude</div>
+      <div class="card-text" style="background:#030008;border-radius:8px;padding:16px;margin-top:8px;font-family:monospace;font-size:.83rem;line-height:1.8;color:#d4c8f0;">
+        "Using the master prompt below, build me the complete single-file HTML portfolio for Bhavesh Churyai. Follow every rule exactly. No placeholders — complete code only. The priority is: 1) no layout bugs 2) smooth 60fps 3) PeachWeb-style immersion. [paste master prompt here]"
+      </div>
+    </div>
+    <div class="card" style="border-color:rgba(255,194,0,0.3);">
+      <div class="card-title"><span class="card-icon">⚡</span>Pro Tips for the Build Session</div>
+      <div class="card-text">
+        <strong>If it starts glitching:</strong> Ask "Fix only the layout bug — do not rewrite the whole file"<br/>
+        <strong>If canvas is black:</strong> Check renderer.setClearColor is set, and canvas is before sections in HTML<br/>
+        <strong>If sections are invisible:</strong> Make sure z-index:2 is on the scroll container, not on each section<br/>
+        <strong>If scroll feels choppy:</strong> Add will-change:transform to the canvas element<br/>
+        <strong>If mobile breaks:</strong> Ask "Add mobile media query — reduce particle count and simplify layout only"
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function copyPrompt(){
+  const el = document.getElementById('prompt-box');
+  const text = el.innerText.replace(/\/\/ ═+[\s\S]*?═+\/\//g,'').trim();
+  navigator.clipboard.writeText(el.innerText).then(()=>{
+    const btn = document.querySelector('.copy-btn');
+    btn.textContent = '✅ COPIED!';
+    btn.style.background = 'rgba(0,255,100,0.1)';
+    btn.style.borderColor = '#00ff64';
+    btn.style.color = '#00ff64';
+    setTimeout(()=>{
+      btn.textContent = '📋 COPY MASTER PROMPT TO CLIPBOARD';
+      btn.style.background = '';
+      btn.style.borderColor = '';
+      btn.style.color = '';
+    }, 2500);
+  });
+}
+</script>
+</body>
+</html>
